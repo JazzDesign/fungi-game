@@ -1,15 +1,18 @@
+// BASE_URL: "/" en dev, "/fungi-game/" en prod (vite.config)
+const BASE = (typeof import.meta !== "undefined" && import.meta.env?.BASE_URL) || "/";
+
 /**
  * Carga sprites y sonidos. Retorna una promesa que se resuelve cuando todos están listos.
  */
 export function loadAssets() {
-  const laughSnd = loadSound("laugh", "/sounds/laugh.wav");
-  const surprisedSnd = loadSound("surprised", "/sounds/surprised.wav");
-  const songSnd = loadSound("song", "/sounds/song.wav");
-  const forestSnd = loadSound("forest", "/sounds/forest.wav");
-  const collectSnd = loadSound("collect", "/sounds/collect.wav");
-  const jumpSnd = loadSound("jump", "/sounds/jump.wav");
+  const laughSnd = loadSound("laugh", `${BASE}sounds/laugh.wav`);
+  const surprisedSnd = loadSound("surprised", `${BASE}sounds/surprised.wav`);
+  const songSnd = loadSound("song", `${BASE}sounds/song.wav`);
+  const forestSnd = loadSound("forest", `${BASE}sounds/forest.wav`);
+  const collectSnd = loadSound("collect", `${BASE}sounds/collect.wav`);
+  const jumpSnd = loadSound("jump", `${BASE}sounds/jump.wav`);
 
-  const walksAsset = loadSprite("walks", "/sprites/walks.png", {
+  const walksAsset = loadSprite("walks", `${BASE}sprites/walks.png`, {
     sliceX: 5,
     sliceY: 1,
     anims: {
@@ -18,33 +21,33 @@ export function loadAssets() {
     },
   });
 
-  const laughAsset = loadSprite("laugh", "/sprites/laugh.png", {
+  const laughAsset = loadSprite("laugh", `${BASE}sprites/laugh.png`, {
     sliceX: 1,
     sliceY: 1,
     anims: { laugh: 0 },
   });
 
-  const jumpAsset = loadSprite("jump", "/sprites/jump.png", {
+  const jumpAsset = loadSprite("jump", `${BASE}sprites/jump.png`, {
     sliceX: 1,
     sliceY: 1,
     anims: { jump: 0 },
   });
 
-  const surpriseAsset = loadSprite("surprise", "/sprites/surprise.png", {
+  const surpriseAsset = loadSprite("surprise", `${BASE}sprites/surprise.png`, {
     sliceX: 1,
     sliceY: 1,
     anims: { surprise: 0 },
   });
 
-  const titleAsset = loadSprite("title", "/sprites/title.png");
+  const titleAsset = loadSprite("title", `${BASE}sprites/title.png`);
 
-  const bgGroundAsset = loadSprite("bg-ground", "/sprites/background/bg-ground.png");
-  const bgCloudsAsset = loadSprite("bg-clouds", "/sprites/background/bg-clouds.png");
-  const bgTreesAsset = loadSprite("bg-trees", "/sprites/background/bg-threes.png");
+  const bgGroundAsset = loadSprite("bg-ground", `${BASE}sprites/background/bg-ground.png`);
+  const bgCloudsAsset = loadSprite("bg-clouds", `${BASE}sprites/background/bg-clouds.png`);
+  const bgTreesAsset = loadSprite("bg-trees", `${BASE}sprites/background/bg-threes.png`);
 
-  const m1Asset = loadSprite("m1", "/sprites/elements/m1.png");
-  const m2Asset = loadSprite("m2", "/sprites/elements/m2.png");
-  const e1Asset = loadSprite("e1", "/sprites/elements/e1.png");
+  const m1Asset = loadSprite("m1", `${BASE}sprites/elements/m1.png`);
+  const m2Asset = loadSprite("m2", `${BASE}sprites/elements/m2.png`);
+  const e1Asset = loadSprite("e1", `${BASE}sprites/elements/e1.png`);
 
   const soundLoaders = [laughSnd, surprisedSnd, songSnd, forestSnd, collectSnd, jumpSnd].map((a) =>
     a.loaded ? Promise.resolve() : new Promise((r) => a.onLoad(() => r()))

@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/fungi-game/",
+  base: process.env.NODE_ENV === "production" ? "/fungi-game/" : "/",
   server: {
     host: true,
   },

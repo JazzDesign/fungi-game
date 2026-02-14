@@ -3,6 +3,21 @@ import { loadAssets } from "./loadAssets.js";
 import { setupGamepad } from "./gamepad.js";
 import { bgMusic } from "./bgMusic.js";
 
+// Overlay: responde al toque INMEDIATAMENTE (antes de que loadAssets bloquee)
+const unlockEl = document.getElementById("audio-unlock");
+if (unlockEl) {
+  const handler = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    unlockEl.remove();
+    if (typeof audioCtx !== "undefined" && audioCtx.state === "suspended") audioCtx.resume();
+    window.__audioUnlocked = true;
+  };
+  unlockEl.addEventListener("click", handler, { once: true, capture: true });
+  unlockEl.addEventListener("touchstart", handler, { once: true, capture: true, passive: false });
+  unlockEl.addEventListener("touchend", handler, { once: true, capture: true, passive: false });
+}
+
 kaboom({
   global: true,
   font: "Merriweather",
@@ -41,15 +56,7 @@ const startSong = () => {
   bgMusic.applyMute();
 };
 window.__applyMute = () => bgMusic.applyMute();
-const unlockEl = document.getElementById("audio-unlock");
-if (unlockEl) {
-  const unlockAndHide = () => {
-    startSong();
-    unlockEl.remove();
-  };
-  unlockEl.addEventListener("click", unlockAndHide, { once: true });
-  unlockEl.addEventListener("touchstart", unlockAndHide, { once: true });
-}
+if (window.__audioUnlocked) startSong();
 document.addEventListener("click", startSong, { once: true });
 document.addEventListener("keydown", startSong, { once: true });
 document.addEventListener("touchstart", startSong, { once: true, passive: true });

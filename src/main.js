@@ -14,7 +14,7 @@ kaboom({
   background: [135, 206, 250],
   root: document.querySelector("#screen-inner") ?? document.body,
 });
-
+ 
 setupGamepad(document.querySelector(".gameboy"));
 
 await loadAssets();
